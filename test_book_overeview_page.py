@@ -4,12 +4,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-DRIVER_PATH = r"C:\drivers\selenium\chromedriver.exe"
 
 @pytest.fixture
 @pytest.mark.parametrize("book_name", [("City Of Glass"),("The Wave")])
 def bookpage(book_name):
-    driver = webdriver.Chrome(DRIVER_PATH)
+    driver = webdriver.Chrome("chromedriver.exe")
     driver.get("https://www.bookdepository.com/")
     wait = WebDriverWait(driver, 10)
     search_tab = driver.find_element_by_name("searchTerm")

@@ -1,11 +1,9 @@
 import pytest
 from selenium import webdriver
 
-DRIVER_PATH = r"C:\drivers\selenium\chromedriver.exe"
-
 @pytest.fixture
 def homepage():
-    driver = webdriver.Chrome(DRIVER_PATH)
+    driver = webdriver.Chrome("chromedriver.exe")
     driver.get("https://www.bookdepository.com/")
     return driver
 

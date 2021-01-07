@@ -5,11 +5,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-DRIVER_PATH = r"C:\drivers\selenium\chromedriver.exe"
 
 @pytest.fixture
 def spanish_page():
-    driver = webdriver.Chrome(DRIVER_PATH)
+    driver = webdriver.Chrome("chromedriver.exe")
     wait = WebDriverWait(driver, 10)
     driver.get("https://www.bookdepository.com/")
     actions = ActionChains(driver)
