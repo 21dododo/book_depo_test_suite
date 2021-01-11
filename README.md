@@ -6,6 +6,7 @@ The test suite includes:
 3. Test cases table.
 4. UI tests using selenium and Pytest.
 
+
 Walkthrough for running the tests:
 1. Download the repository and open it in any code editor.
 2. In the terminal write: pip install -r requirements 
