@@ -11,5 +11,5 @@ Walkthrough for running the tests:
 1. Download the repository and open it in any code editor.
 2. In the terminal write: pip install -r requirements 
 3. In the terminal write: pytest 
-4. If you want several tests to run in parallel, instead of step 3 write: pytest -n <number of tests in parallel> (ex: pytest -n 4)
+4. If you want several tests to run in parallel, instead of step 3 write: pytest -n {number of tests in parallel} (ex: pytest -n 4)
 
