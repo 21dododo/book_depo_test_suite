@@ -1,5 +1,7 @@
 import pytest
 from selenium import webdriver
+from locators import *
+from selenium.webdriver.common.by import By
 
 @pytest.fixture
 def advanced_page():
@@ -11,10 +13,10 @@ def advanced_page():
 @pytest.mark.parametrize("book_name", [("City Of Glass"), ("The Wave")])
 def test_existing_book(advanced_page, book_name):
     driver = advanced_page
-    title = driver.find_element_by_name("searchTitle")
+    title = driver.find_element(*AdvancedSearchLocators.TITLE_TAB)
     title.clear()
     title.send_keys(book_name)
-    search_btn = driver.find_element_by_xpath('//button[text()="Search"]')
+    search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
     books = driver.find_elements_by_class_name("book-item")
     found_title = False
@@ -29,7 +31,7 @@ def test_existing_book(advanced_page, book_name):
 #@pytest.mark.skip
 def test_search_empty_fields(advanced_page):
     driver = advanced_page
-    search_btn = driver.find_element_by_xpath('//button[text()="Search"]')
+    search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
     element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
     assert "advanced search" in element_text.lower()
@@ -38,10 +40,10 @@ def test_search_empty_fields(advanced_page):
 #@pytest.mark.skip
 def test_non_existing_book(advanced_page):
     driver = advanced_page
-    title = driver.find_element_by_name("searchTitle")
+    title = driver.find_element(*AdvancedSearchLocators.TITLE_TAB)
     title.clear()
     title.send_keys("MMMM1234")
-    search_btn = driver.find_element_by_xpath('//button[text()="Search"]')
+    search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
     element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
     assert "advanced search" in element_text.lower()
@@ -50,13 +52,13 @@ def test_non_existing_book(advanced_page):
 #@pytest.mark.skip
 def test_non_existing_book(advanced_page):
     driver = advanced_page
-    title = driver.find_element_by_name("searchTitle")
+    title = driver.find_element(*AdvancedSearchLocators.TITLE_TAB)
     title.clear()
     title.send_keys("City Of Glass")
     author = driver.find_element_by_name("searchAuthor")
     author.clear()
     author.send_keys("J K Rowling")
-    search_btn = driver.find_element_by_xpath('//button[text()="Search"]')
+    search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
     element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
     assert "advanced search" in element_text.lower()
