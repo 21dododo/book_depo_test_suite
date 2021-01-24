@@ -23,6 +23,9 @@ class CategoryLocators(object):
 
 class AdvancedSearchLocators(object):
     TITLE_TAB = (By.NAME, "searchTitle")
+    AUTHOR_TAB = (By.NAME, "searchAuthor")
+    KEYWORD_TAB = (By.XPATH, '//form/div[1]/div[1]/div/input')
+    PUBLISHER_TAB = (By.NAME, "searchPublisher")
     SEARCH_BUTTON = (By.XPATH, '//button[text()="Search"]')
 
 class BookPageLocators(object):
@@ -32,3 +35,8 @@ class BookPageLocators(object):
 class SpanishPage(object):
     LANGUAGE_BUTTON = (By.PARTIAL_LINK_TEXT, "Español")
     ENGLISH_BUTTON = (By.PARTIAL_LINK_TEXT, "English")
+
+class ExampleBooks(object):
+    BOOKS = [("City Of Glass"), ("The Wave")]
+    #first book then author
+    BOOKS_WITH_AUTHORS = [("City Of Glass", "Cassandra Clare"),("The Wave", "Morton Rhue")]

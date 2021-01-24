@@ -9,9 +9,10 @@ from locators import *
 def homepage():
     driver = webdriver.Chrome("chromedriver.exe")
     driver.get("https://www.bookdepository.com/")
-    return driver
+    yield driver
+    driver.close()
 
-#@pytest.mark.skip
+
 def test_top_categories(homepage):
     driver = homepage
     actions = ActionChains(driver)
@@ -19,9 +20,8 @@ def test_top_categories(homepage):
     art_and_photo = driver.find_element(*CategoryLocators.ART_AND_PHOTO)
     actions.move_to_element(shop_by_cat).move_to_element(art_and_photo).click().perform()
     assert "art & photography" in driver.title.lower()
-    driver.close()
 
-#@pytest.mark.skip
+
 def test_more_categories(homepage):
     driver = homepage
     actions = ActionChains(driver)
@@ -29,9 +29,8 @@ def test_more_categories(homepage):
     audio_books = driver.find_element(*CategoryLocators.AUDIO_BOOKS)
     actions.move_to_element(shop_by_cat).move_to_element(audio_books).click().perform()
     assert "audio books" in driver.title.lower()
-    driver.close()
 
-#@pytest.mark.skip
+
 def test_top_authors(homepage):
     driver = homepage
     actions = ActionChains(driver)
@@ -39,9 +38,8 @@ def test_top_authors(homepage):
     jk_rowling = driver.find_element(*CategoryLocators.JK_ROWLING)
     actions.move_to_element(shop_by_cat).move_to_element(jk_rowling).click().perform()
     assert "j k rowling" in driver.title.lower()
-    driver.close()
 
-#@pytest.mark.skip
+
 def test_bestselling_series(homepage):
     driver = homepage
     actions = ActionChains(driver)
@@ -49,9 +47,8 @@ def test_bestselling_series(homepage):
     harry_potter = driver.find_element(*CategoryLocators.HARRY_POTTER)
     actions.move_to_element(shop_by_cat).move_to_element(harry_potter).click().perform()
     assert "harry potter" in driver.title.lower()
-    driver.close()
 
-#@pytest.mark.skip
+
 def test_popular_features(homepage):
     driver = homepage
     actions = ActionChains(driver)
@@ -59,5 +56,5 @@ def test_popular_features(homepage):
     home_learn = driver.find_element(*CategoryLocators.HOME_LEARNING)
     actions.move_to_element(shop_by_cat).move_to_element(home_learn).click().perform()
     assert "home learning" in driver.title.lower()
-    driver.close()
+
 

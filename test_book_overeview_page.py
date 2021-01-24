@@ -7,7 +7,7 @@ from locators import *
 
 
 @pytest.fixture
-@pytest.mark.parametrize("book_name", [("City Of Glass"),("The Wave")])
+@pytest.mark.parametrize("book_name", ExampleBooks.BOOKS)
 def bookpage(book_name):
     driver = webdriver.Chrome("chromedriver.exe")
     driver.get("https://www.bookdepository.com/")
@@ -20,28 +20,18 @@ def bookpage(book_name):
     wait.until(EC.title_contains("Results for"))
     title = driver.find_element_by_partial_link_text(book_name)
     driver.execute_script("arguments[0].click();", title)
-    return driver
-
-
-
-#@pytest.mark.skip
-@pytest.mark.parametrize("book_name", [("City Of Glass"),("The Wave")])
-def test_title_matches_book(bookpage, book_name):
-    driver = bookpage
-    assert book_name.lower() in driver.title.lower()
-    driver.close()
-
-#@pytest.mark.skip
-@pytest.mark.parametrize("book_name", [("City Of Glass"),("The Wave")])
-def test_details_table(bookpage, book_name):
-    driver = bookpage
-    assert driver.find_element(*BookPageLocators.DESCRIPTION_TABLE).is_displayed()
+    yield driver
     driver.close()
 
 
-#@pytest.mark.skip
-@pytest.mark.parametrize("book_name", [("City Of Glass"),("The Wave")])
-def test_price_displayed(bookpage, book_name):
+@pytest.mark.parametrize("book_name", ExampleBooks.BOOKS)
+def test_overeview_features(bookpage, book_name):
     driver = bookpage
-    assert driver.find_element(*BookPageLocators.PRICE).is_displayed()
-    driver.close()
+    correct_title = book_name.lower() in driver.title.lower()
+    assert correct_title
+    description_table_displayed = driver.find_element(*BookPageLocators.DESCRIPTION_TABLE).is_displayed()
+    assert description_table_displayed
+    price_displayed = driver.find_element(*BookPageLocators.PRICE).is_displayed()
+    assert  price_displayed
+
+
