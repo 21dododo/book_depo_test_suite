@@ -3,14 +3,6 @@ from selenium import webdriver
 from locators import *
 from selenium.webdriver.common.by import By
 
-@pytest.fixture
-def advanced_page():
-    driver = webdriver.Chrome("chromedriver.exe")
-    driver.get("https://www.bookdepository.com/search/advanced")
-    yield driver
-    driver.close()
-
-
 @pytest.mark.parametrize("book_name", ExampleBooks.BOOKS)
 def test_existing_book_advanced(advanced_page, book_name):
     driver = advanced_page
@@ -33,7 +25,8 @@ def test_search_empty_fields(advanced_page):
     driver = advanced_page
     search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
-    element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    #checks that we did not move from the advanced search page when searching with all fields empty
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 
@@ -44,7 +37,8 @@ def test_non_existing_book_advanced(advanced_page):
     title.send_keys("MMMM1234")
     search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
-    element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    # checks that we did not move from the advanced search page when searching a non existing book
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 
@@ -58,7 +52,7 @@ def test_existing_book_wrong_author(advanced_page):
     author.send_keys("J K Rowling")
     search_btn = driver.find_element(*AdvancedSearchLocators.SEARCH_BUTTON)
     search_btn.click()
-    element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 

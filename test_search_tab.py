@@ -3,15 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from locators import *
 
-
-@pytest.fixture
-def homepage():
-    driver = webdriver.Chrome("chromedriver.exe")
-    driver.get("https://www.bookdepository.com/")
-    yield driver
-    driver.close()
-
-
 @pytest.mark.parametrize("book_name", ExampleBooks.BOOKS)
 def test_search_existing_book(homepage, book_name):
     driver = homepage
@@ -34,7 +25,7 @@ def test_press_empty(homepage):
     driver = homepage
     search_btn = driver.find_element(*MainPageLocators.SEARCH_BUTTON)
     search_btn.click()
-    element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 
@@ -45,7 +36,7 @@ def test_search_non_existing_book(homepage):
     search_tab.clear()
     search_tab.send_keys("MMMM1234")
     search_btn.click()
-    element_text = str(driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 

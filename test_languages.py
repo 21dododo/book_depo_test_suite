@@ -7,20 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from locators import *
 
 
-@pytest.fixture
-def spanish_page():
-    driver = webdriver.Chrome("chromedriver.exe")
-    wait = WebDriverWait(driver, 10)
-    driver.get("https://www.bookdepository.com/")
-    actions = ActionChains(driver)
-    language_btn = driver.find_element(*MainPageLocators.LANGUAGE_BUTTON)
-    actions.move_to_element(language_btn).perform()
-    wait.until(EC.element_to_be_clickable(MainPageLocators.SPANISH_BUTTON))
-    driver.find_element(*MainPageLocators.SPANISH_BUTTON).click()
-    yield driver
-    driver.close()
-
-
 def test_spanish(spanish_page):
     driver = spanish_page
     assert driver.find_element_by_partial_link_text("Los más vendidos").is_displayed()

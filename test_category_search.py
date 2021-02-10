@@ -5,14 +5,6 @@ from selenium.webdriver.common.by import By
 from locators import *
 
 
-@pytest.fixture
-def homepage():
-    driver = webdriver.Chrome("chromedriver.exe")
-    driver.get("https://www.bookdepository.com/")
-    yield driver
-    driver.close()
-
-
 def test_top_categories(homepage):
     driver = homepage
     actions = ActionChains(driver)

@@ -3,12 +3,6 @@ from selenium import webdriver
 from locators import *
 from selenium.webdriver.common.by import By
 
-@pytest.fixture
-def homepage():
-    driver = webdriver.Chrome("chromedriver.exe")
-    driver.get("https://www.bookdepository.com/")
-    yield driver
-    driver.close()
 
 
 def test_bestseller_button(homepage):
@@ -44,7 +38,7 @@ def test_help_button(homepage):
 def test_advanced_search_button(homepage):
     driver = homepage
     driver.find_element(*MainPageLocators.ADVANCED_SEARCH_BUTTON).click()
-    element_text =str (driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text)
+    element_text = driver.find_element_by_class_name("content").find_element_by_tag_name("h1").text
     assert "advanced search" in element_text.lower()
 
 
